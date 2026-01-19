@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 
 import com.bydavy.morpher.font.DFont;
+import com.github.h6ah4i.numbermorphing.R;
 
 public class DigitalClockView extends View {
 

@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdk
 
     testBuildType "debug"
 
@@ -15,26 +14,20 @@ android {
         }
     }
 
+    buildFeatures.buildConfig = true
+
     defaultConfig {
+        applicationId "com.github.h6ah4i.numbermorphing.example"
         versionCode 12
         versionName "2.0"
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdk rootProject.ext.minSdk
+        targetSdk rootProject.ext.targetSdk
 
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
         testHandleProfiling false
 
         buildConfigField "boolean", "EXTRA_LOGS", "false"
-
-        resConfig "en"
-    }
-
-    splits {
-        density {
-            enable true
-            reset()
-            include "nodpi", "hdpi"
-        }
+        resourceConfigurations += ['en']
     }
 
     buildTypes {
@@ -50,32 +43,24 @@ android {
         }
     }
 
-    aaptOptions {
+    namespace 'com.github.h6ah4i.numbermorphing.example'
+    androidResources {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~'
         noCompress 'txt'
-        ignoreAssetsPattern "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
     }
-
-    lintOptions {
-        // if true, show all locations for an error, do not truncate lists, etc.
-        showAll true
-        // Fallback lint configuration (default severities, etc.)
-        lintConfig file("default-lint.xml")
-        // if true, generate a text report of issues (false by default)
-        textReport true
-        // location to write the output; can be a file or 'stdout'
-        textOutput 'stdout'
-        // if true, generate an XML report for use by for example Jenkins
-        xmlReport true
-        // file to write report to (if not specified, defaults to lint-results.xml)
-        xmlOutput file("lint-report.xml")
-        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
+    lint {
+        htmlOutput file('lint-report.html')
         htmlReport true
-        // optional path to report (default will be lint-results.html in the builddir)
-        htmlOutput file("lint-report.html")
+        lintConfig file('default-lint.xml')
+        showAll true
+        textOutput file('stdout')
+        textReport true
+        xmlOutput file('lint-report.xml')
+        xmlReport true
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.1.1'
-    compile project(':library')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(':library')
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import com.bydavy.morpher.DigitalClockView;
 import com.bydavy.morpher.font.DFont;
+import com.github.h6ah4i.numbermorphing.example.R;
 
 import java.text.SimpleDateFormat;
 

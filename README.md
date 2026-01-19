@@ -31,5 +31,5 @@ Grab this project with JitPack:
 ### App build.gradle:
 
     dependencies {
-      compile 'com.github.ronaldsmartin:android-number-morphing:vX.X.X'
+      compile 'com.github.h6ah4i:android-number-morphing:vX.X.X'
     }

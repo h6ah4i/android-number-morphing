@@ -1,33 +1,48 @@
-apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 
-group = 'com.github.ronaldsmartin'
+group = 'com.github.h6ah4i'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdk
 
-    aaptOptions {
-        noCompress 'txt'
-        ignoreAssetsPattern "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    defaultConfig {
+        minSdk rootProject.ext.minSdk
     }
 
-    lintOptions {
-        // if true, show all locations for an error, do not truncate lists, etc.
-        showAll true
-        // Fallback lint configuration (default severities, etc.)
-        lintConfig file("default-lint.xml")
-        // if true, generate a text report of issues (false by default)
-        textReport true
-        // location to write the output; can be a file or 'stdout'
-        textOutput 'stdout'
-        // if true, generate an XML report for use by for example Jenkins
-        xmlReport true
-        // file to write report to (if not specified, defaults to lint-results.xml)
-        xmlOutput file("lint-report.xml")
-        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
+    namespace 'com.github.h6ah4i.numbermorphing'
+
+    androidResources {
+        ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        noCompress 'txt'
+    }
+
+    lint {
+        htmlOutput file('lint-report.html')
         htmlReport true
-        // optional path to report (default will be lint-results.html in the builddir)
-        htmlOutput file("lint-report.html")
+        lintConfig file('default-lint.xml')
+        showAll true
+        textOutput file('stdout')
+        textReport true
+        xmlOutput file('lint-report.xml')
+        xmlReport true
+    }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
     }
 }
